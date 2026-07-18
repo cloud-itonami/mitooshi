@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>mitooshi 見通し — forecast distribution (resilience)</title>
+<!--
+  mitooshi 見通し forecast viewer (ADR-2606051800). A DISTRIBUTION fan chart of a kakaku
+  supply-demand series: the historical as-of observation trail + the forecast distribution
+  (mean ± 1σ / ± 2σ bands) at the target horizon.
+
+  CONSTITUTIONAL: this shows a DISTRIBUTION (a band), NEVER a single-line target
+  (G1 point_asserted=false), routed to :resilience (G2) — the charter-clean inverse of a
+  price-target chart. No trade, no advice, no prophecy.
+
+  SELF-CONTAINED: the payload is inlined at build time (build_forecast_viz.cljc replaces the
+  __PAYLOAD__ marker), so it opens via file:// with zero external fetch. The math is computed
+  once in src/mitooshi/methods/{bridge_kakaku, forecast}.cljc; this page only renders it.
+-->
+<style>
+  :root { color-scheme: dark; }
+  body { margin:0; background:#0b0e14; color:#cdd6f4; font:13px/1.5 ui-sans-serif,system-ui,sans-serif; }
+  header { padding:12px 16px; border-bottom:1px solid #1e2330; }
+  h1 { font-size:16px; margin:0 0 2px; }
+  .sub { color:#7f8aa3; font-size:11px; }
+  main { padding:16px; }
+  svg { background:#11151f; border:1px solid #1e2330; border-radius:10px; }
+  .foot { padding:10px 16px; color:#585b70; font-size:11px; border-top:1px solid #1e2330; }
+  .legend { margin-top:8px; color:#a6adc8; font-size:11px; }
+  .sw { display:inline-block; width:11px; height:11px; border-radius:2px; vertical-align:middle; margin:0 4px 0 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>mitooshi 見通し — 需給予測 (distribution)</h1>
+  <div class="sub" id="sub">distribution forecast routed to resilience — never a point, never a trade (G1/G2)</div>
+</header>
+<main>
+  <svg id="chart" width="720" height="320" viewBox="0 0 720 320"></svg>
+  <div class="legend">
+    <span class="sw" style="background:#585b70"></span>±2σ
+    <span class="sw" style="background:#89b4fa"></span>±1σ
+    <span class="sw" style="background:#f9e2af"></span>mean (distribution center, not asserted)
+    <span class="sw" style="background:#a6e3a1"></span>observed history
+  </div>
+</main>
+<div class="foot" id="foot"></div>
+<script>
+  const PAYLOAD = /*__PAYLOAD__*/null;
+  const W=720, H=320, PAD=40;
+  function sx(t, tmin, tmax){ return PAD + (W-2*PAD)*(t-tmin)/Math.max(1,(tmax-tmin)); }
+  function sy(v, vmin, vmax){ return H-PAD - (H-2*PAD)*(v-vmin)/Math.max(1e-9,(vmax-vmin)); }
+  function line(x1,y1,x2,y2,stroke,w){ const e=document.createElementNS('http://www.w3.org/2000/svg','line');
+    e.setAttribute('x1',x1);e.setAttribute('y1',y1);e.setAttribute('x2',x2);e.setAttribute('y2',y2);
+    e.setAttribute('stroke',stroke);e.setAttribute('stroke-width',w||1);return e; }
+  function dot(x,y,r,fill){ const e=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    e.setAttribute('cx',x);e.setAttribute('cy',y);e.setAttribute('r',r);e.setAttribute('fill',fill);return e; }
+  function rect(x,y,w,h,fill){ const e=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('width',w);e.setAttribute('height',h);
+    e.setAttribute('fill',fill);e.setAttribute('opacity',0.5);return e; }
+  function render(p){
+    const svg=document.getElementById('chart');
+    if(!p||!p.history||!p.history.length){ document.getElementById('sub').textContent='(no data — run build_forecast_viz.cljc)'; return; }
+    const fc=p.forecast;
+    const ts=p.history.map(d=>d.t).concat(fc?[fc.target]:[]);
+    const vs=p.history.map(d=>d.v).concat(fc?[fc.band95[0],fc.band95[1]]:[]);
+    const tmin=Math.min(...ts), tmax=Math.max(...ts);
+    const vmin=Math.min(...vs)-0.1, vmax=Math.max(...vs)+0.1;
+    // axes
+    svg.appendChild(line(PAD,H-PAD,W-PAD,H-PAD,'#1e2330',1));
+    svg.appendChild(line(PAD,PAD,PAD,H-PAD,'#1e2330',1));
+    // forecast bands (drawn as a vertical interval at the target horizon)
+    if(fc){
+      const x=sx(fc.target,tmin,tmax);
+      svg.appendChild(rect(x-16, sy(fc.band95[1],vmin,vmax), 32, sy(fc.band95[0],vmin,vmax)-sy(fc.band95[1],vmin,vmax), '#585b70'));
+      svg.appendChild(rect(x-16, sy(fc.band68[1],vmin,vmax), 32, sy(fc.band68[0],vmin,vmax)-sy(fc.band68[1],vmin,vmax), '#89b4fa'));
+      svg.appendChild(dot(x, sy(fc.mean,vmin,vmax), 4, '#f9e2af'));
+      // link last obs → forecast mean (dashed feel via thin line)
+      const last=p.history[p.history.length-1];
+      svg.appendChild(line(sx(last.t,tmin,tmax),sy(last.v,vmin,vmax),x,sy(fc.mean,vmin,vmax),'#45475a',1));
+    }
+    // history polyline
+    for(let i=1;i<p.history.length;i++){
+      const a=p.history[i-1], b=p.history[i];
+      svg.appendChild(line(sx(a.t,tmin,tmax),sy(a.v,vmin,vmax),sx(b.t,tmin,tmax),sy(b.v,vmin,vmax),'#a6e3a1',2));
+    }
+    for(const d of p.history) svg.appendChild(dot(sx(d.t,tmin,tmax),sy(d.v,vmin,vmax),3,'#a6e3a1'));
+  }
+  render(PAYLOAD);
+  document.getElementById('foot').textContent =
+    (PAYLOAD&&PAYLOAD.generator?PAYLOAD.generator+' · ':'') +
+    'intent: ' + (PAYLOAD&&PAYLOAD.intent?PAYLOAD.intent:'n/a');
+</script>
+</body>
+</html>

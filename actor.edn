@@ -4,5 +4,5 @@
  :graph-type "com.etzhayyim.mitooshi.graph"
  :published  "2026-06-28"
  :bundle [["data" "data"]
-          [".well-known/did.json" "did.json"]
+          ["wire/identity/did.json" "did.json"]
           ["README.md" "README.md"]]}

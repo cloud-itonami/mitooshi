@@ -1,0 +1,12 @@
+{:catalog/version 1
+ :catalog/canonical-format :edn
+ :actor :mitooshi
+ :contracts
+ [{:name :calibration-report :canonical/path "contracts/lexicons/calibrationReport.edn" :wire/path "wire/contracts/lexicons/calibrationReport.json"}
+  {:name :forecast-distribution :canonical/path "contracts/lexicons/forecastDistribution.edn" :wire/path "wire/contracts/lexicons/forecastDistribution.json"}
+  {:name :model-update-attestation :canonical/path "contracts/lexicons/modelUpdateAttestation.edn" :wire/path "wire/contracts/lexicons/modelUpdateAttestation.json"}
+  {:name :score-residual :canonical/path "contracts/lexicons/scoreResidual.edn" :wire/path "wire/contracts/lexicons/scoreResidual.json"}
+  {:name :series-observation :canonical/path "contracts/lexicons/seriesObservation.edn" :wire/path "wire/contracts/lexicons/seriesObservation.json"}
+  {:name :silen-mitooshi-review :canonical/path "contracts/lexicons/silenMitooshiReview.edn" :wire/path "wire/contracts/lexicons/silenMitooshiReview.json"}]
+ :identity [{:kind :did-document :wire/path "wire/identity/did.json"}
+            {:kind :actor-profile :wire/path "wire/identity/profile.json"}]}

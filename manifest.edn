@@ -39,11 +39,11 @@
   {:ng/id "N7" :ng/req "no server-signed model promotion (G9 — no-server-key, ADR-2605231525)"}]
 
  :actor/cells
- [{:cell/id "series_ingest"    :cell/kind :langgraph :cell/runtime :wasm :cell/node "reuben"}
-  {:cell/id "forecast_issue"   :cell/kind :langgraph :cell/runtime :wasm :cell/node "simeon"}
-  {:cell/id "backtest_score"   :cell/kind :langgraph :cell/runtime :wasm :cell/node "levi"}
-  {:cell/id "online_update"    :cell/kind :langgraph :cell/runtime :wasm :cell/node "judah"}
-  {:cell/id "calibration_gate" :cell/kind :langgraph :cell/runtime :wasm :cell/node "zebulun"}]
+ [{:cell/id "series_ingest"    :cell/kind :state-machine :cell/runtime :cljc :cell/node "reuben"}
+  {:cell/id "forecast_issue"   :cell/kind :state-machine :cell/runtime :cljc :cell/node "simeon"}
+  {:cell/id "backtest_score"   :cell/kind :state-machine :cell/runtime :cljc :cell/node "levi"}
+  {:cell/id "online_update"    :cell/kind :state-machine :cell/runtime :cljc :cell/node "judah"}
+  {:cell/id "calibration_gate" :cell/kind :state-machine :cell/runtime :cljc :cell/node "zebulun"}]
 
  :actor/lex
  [{:lex/id "seriesObservation"}

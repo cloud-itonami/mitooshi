@@ -1,0 +1,53 @@
+{:paths ["src" "test"]
+ :deps {cheshire/cheshire {:mvn/version "5.13.0"}}
+ :tasks
+ {test {:doc "Run the standalone Mitooshi CLJC suite"
+        :requires ([clojure.test]
+                   [mitooshi.cells.online-update.test-state-machine]
+                   [mitooshi.cells.test-state-machine]
+                   [mitooshi.methods.test-analyze]
+                   [mitooshi.methods.test-backtest]
+                   [mitooshi.methods.test-bridge]
+                   [mitooshi.methods.test-bridge-kakaku]
+                   [mitooshi.methods.test-calibrate]
+                   [mitooshi.methods.test-clearpath]
+                   [mitooshi.methods.test-forecast]
+                   [mitooshi.methods.test-forecast-quantile]
+                   [mitooshi.methods.test-horizon]
+                   [mitooshi.methods.test-ingest]
+                   [mitooshi.methods.test-kakaku-forecast-e2e]
+                   [mitooshi.methods.test-persist]
+                   [mitooshi.methods.test-promote]
+                   [mitooshi.methods.test-score]
+                   [mitooshi.methods.test-social]
+                   [mitooshi.methods.test-synthesize]
+                   [mitooshi.murakumo-test]
+                   [mitooshi.test-continual-learning]
+                   [mitooshi.test-learning-loop]
+                   [mitooshi.viz.test-build-forecast-viz])
+        :task (let [r (clojure.test/run-tests
+               'mitooshi.cells.online-update.test-state-machine
+               'mitooshi.cells.test-state-machine
+               'mitooshi.methods.test-analyze
+               'mitooshi.methods.test-backtest
+               'mitooshi.methods.test-bridge
+               'mitooshi.methods.test-bridge-kakaku
+               'mitooshi.methods.test-calibrate
+               'mitooshi.methods.test-clearpath
+               'mitooshi.methods.test-forecast
+               'mitooshi.methods.test-forecast-quantile
+               'mitooshi.methods.test-horizon
+               'mitooshi.methods.test-ingest
+               'mitooshi.methods.test-kakaku-forecast-e2e
+               'mitooshi.methods.test-persist
+               'mitooshi.methods.test-promote
+               'mitooshi.methods.test-score
+               'mitooshi.methods.test-social
+               'mitooshi.methods.test-synthesize
+               'mitooshi.murakumo-test
+               'mitooshi.test-continual-learning
+               'mitooshi.test-learning-loop
+               'mitooshi.viz.test-build-forecast-viz)]
+                (when (pos? (+ (:fail r) (:error r)))
+                  (throw (ex-info "mitooshi tests failed" r)))
+                r)}}}

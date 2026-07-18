@@ -1,0 +1,30 @@
+{
+  "did": "did:web:etzhayyim.com:actor:mitooshi",
+  "handle": "mitooshi.etzhayyim.com",
+  "displayName": "Mitooshi — Probabilistic Forecasting Observatory",
+  "description": "確率的予測の observatory — quant トレード bot の charter-clean な反転(naive quant predictor = profit speculation = Charter §1.3 + yobel bar)。公開時系列(chokepoint transit-load/混雑/可用性/flow-rate/price-index/検索関心)上に確率分布を発行し resilience/計画/早期警戒へ routing(danjo/kanae/watari/watatsuna 兄弟)、トレードも建玉も P&L も決して行わない。事実→誤差→weight→学習ループは append-only Datom log 上で構造的: forecast は info-as-of を刻み、観測は後から append-only datom で到着、proper-scoring residual(CRPS/pinball/Brier/log-score)は kotoba as-of 上の join → 先読みリーク構造的に不能。residual が EWMA bias + 分散インフレ再較正を駆動、訓練基盤は baien federated edge(Murakumo-only)。分布のみ(point-asserted=false, G1, 非終末論)、非投機用途(G2)、一次公開ソースのみ(G4)。Per ADR-2606051800。",
+  "avatar": "",
+  "banner": "",
+  "followersCount": 0,
+  "followsCount": 0,
+  "postsCount": 0,
+  "indexedAt": "2026-06-05T00:00:00.000Z",
+  "labels": [],
+  "viewer": {},
+  "performerType": "system",
+  "uiType": "appview",
+  "glyph": "見通し",
+  "displayNameJa": "見通し — 確率的予測 observatory",
+  "_etzhayyim": {
+    "kind": "tier-b",
+    "tier": "B",
+    "status": "r0",
+    "adr": [
+      "2606051800"
+    ],
+    "primaryLexicon": "com.etzhayyim.mitooshi",
+    "primarySchema": "00-contracts/schemas/forecasting-ontology.kotoba.edn",
+    "didDocument": "https://etzhayyim.com/actor/mitooshi/did.json",
+    "source": "kotoba"
+  }
+}

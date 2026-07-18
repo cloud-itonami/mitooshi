@@ -1,0 +1,96 @@
+{
+  "lexicon": 1,
+  "id": "com.etzhayyim.mitooshi.forecastDistribution",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "forecastId",
+          "seriesId",
+          "distKind",
+          "use",
+          "pointAsserted",
+          "infoAsOf",
+          "horizon"
+        ],
+        "properties": {
+          "forecastId": {
+            "type": "string",
+            "description": "→ :forecast/id"
+          },
+          "seriesId": {
+            "type": "string",
+            "description": "→ :series/id"
+          },
+          "modelId": {
+            "type": "string",
+            "description": "→ :fc.model/id"
+          },
+          "distKind": {
+            "type": "string",
+            "enum": [
+              "gaussian",
+              "quantile",
+              "categorical",
+              "ensemble"
+            ]
+          },
+          "use": {
+            "type": "string",
+            "enum": [
+              "resilience",
+              "planning",
+              "nowcast",
+              "early-warning",
+              "research"
+            ],
+            "description": "G2 INVARIANT — non-speculative use ONLY; trade/speculation/wager/position are NOT enum members (mitooshi never trades, §1.3 + yobel)"
+          },
+          "pointAsserted": {
+            "type": "boolean",
+            "const": false,
+            "description": "G1 INVARIANT — only false is valid. A deterministic single-future assertion is unrepresentable (非終末論). Every forecast is a distribution."
+          },
+          "infoAsOf": {
+            "type": "integer",
+            "description": "G5 — latest observation ts the forecaster could see; the leak boundary"
+          },
+          "horizon": {
+            "type": "integer",
+            "description": "lead time in series-freq steps"
+          },
+          "mean": {
+            "type": "number",
+            "description": "gaussian"
+          },
+          "sd": {
+            "type": "number",
+            "description": "gaussian — strictly > 0"
+          },
+          "quantiles": {
+            "type": "string",
+            "description": "quantile — edn map level→value"
+          },
+          "probs": {
+            "type": "string",
+            "description": "categorical — edn map class→prob (Σ=1)"
+          },
+          "members": {
+            "type": "string",
+            "description": "ensemble — edn vector of member values; scored by energy-form CRPS"
+          },
+          "sourcing": {
+            "type": "string",
+            "enum": [
+              "representative",
+              "verified"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

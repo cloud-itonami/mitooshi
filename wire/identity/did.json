@@ -1,0 +1,41 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1"
+  ],
+  "id": "did:web:etzhayyim.com:actor:mitooshi",
+  "alsoKnownAs": [
+    "did:web:mitooshi.etzhayyim.com"
+  ],
+  "verificationMethod": [],
+  "service": [
+    {
+      "id": "did:web:etzhayyim.com:actor:mitooshi#atproto_pds",
+      "type": "AtprotoPersonalDataServer",
+      "serviceEndpoint": "https://pds.aozora.app"
+    },
+    {
+      "id": "did:web:etzhayyim.com:actor:mitooshi#xrpc-libp2p",
+      "type": "AtprotoXrpc",
+      "serviceEndpoint": "/dnsaddr/etzhayyim.com/p2p/12D3KooWGRnHP5hHAxSnPQE5gopDqAzWkZ2NAFi2ZZ6o85FnAiEc"
+    }
+  ],
+  "_meta": {
+    "adr": [
+      "2605212030",
+      "2605241800",
+      "2606013800",
+      "2606014500",
+      "2606051800"
+    ],
+    "source": "kotoba",
+    "kind": "tier-b",
+    "status": "r0",
+    "glyph": "見通し",
+    "wasmCid": null,
+    "execModel": "service",
+    "primaryLexicon": "com.etzhayyim.mitooshi",
+    "primarySchema": "00-contracts/schemas/forecasting-ontology.kotoba.edn",
+    "note": "verificationMethod empty — on-chain ERC725 mirror pending; did:web trust root = TLS (no server-minted key, ADR-2605231525)"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "lexicon": 1,
+  "id": "com.etzhayyim.mitooshi.modelUpdateAttestation",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "modelId",
+          "fromVersion",
+          "toVersion",
+          "runtime",
+          "serverHeldKey"
+        ],
+        "properties": {
+          "modelId": {
+            "type": "string",
+            "description": "→ :fc.model/id"
+          },
+          "fromVersion": {
+            "type": "integer"
+          },
+          "toVersion": {
+            "type": "integer"
+          },
+          "trigger": {
+            "type": "string",
+            "enum": [
+              "residual-drift",
+              "calibration-drift",
+              "scheduled"
+            ]
+          },
+          "biasCorr": {
+            "type": "number",
+            "description": "EWMA bias correction applied to the mean — learned from fact"
+          },
+          "varInfl": {
+            "type": "number",
+            "description": "variance inflation restoring calibration — learned from fact"
+          },
+          "runtime": {
+            "type": "string",
+            "const": "baien-edge",
+            "description": "G8 INVARIANT — training runtime is baien federated edge ONLY (Murakumo-only, no commercial GPU; ADR-2605215000/2605242600)"
+          },
+          "signedBy": {
+            "type": "string",
+            "description": "G9 — member/operator DID; a promotion is never server-signed"
+          },
+          "serverHeldKey": {
+            "type": "boolean",
+            "const": false,
+            "description": "G9 INVARIANT — no-server-key; only false is valid (ADR-2605231525)"
+          }
+        }
+      }
+    }
+  }
+}

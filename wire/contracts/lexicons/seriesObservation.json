@@ -1,0 +1,67 @@
+{
+  "lexicon": 1,
+  "id": "com.etzhayyim.mitooshi.seriesObservation",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "seriesId",
+          "sourceClass",
+          "observedAt",
+          "value"
+        ],
+        "properties": {
+          "seriesId": {
+            "type": "string",
+            "description": "→ :series/id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "transit-load",
+              "congestion",
+              "availability",
+              "price-index",
+              "search-interest",
+              "flow-rate",
+              "outage-count"
+            ],
+            "description": "the observable — never a person (watari G4 precedent)"
+          },
+          "sourceClass": {
+            "type": "string",
+            "enum": [
+              "public-broadcast",
+              "primary-disclosure",
+              "open-commons",
+              "gov-open-data",
+              "member-principal"
+            ],
+            "description": "G4 INVARIANT — primary-public only; proprietary terminals + scraped Google-Trends are NOT enum members (kanjo §2(c)/(e))"
+          },
+          "observedAt": {
+            "type": "integer",
+            "description": "epoch — append-only; latest = current, the stream = the trail (非終末論)"
+          },
+          "value": {
+            "type": "number"
+          },
+          "class": {
+            "type": "string",
+            "description": "categorical series — realized class label"
+          },
+          "sourcing": {
+            "type": "string",
+            "enum": [
+              "representative",
+              "verified"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
