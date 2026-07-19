@@ -45,10 +45,10 @@
   {:cell/id "online_update"    :cell/kind :state-machine :cell/runtime :cljc :cell/node "judah"}
   {:cell/id "calibration_gate" :cell/kind :state-machine :cell/runtime :cljc :cell/node "zebulun"}]
 
- :actor/lex
- [{:lex/id "seriesObservation"}
-  {:lex/id "forecastDistribution"}
-  {:lex/id "scoreResidual"}
-  {:lex/id "calibrationReport"}
-  {:lex/id "modelUpdateAttestation"}
-  {:lex/id "silenMitooshiReview"}]}
+ :actor/lexicons
+ ["com.etzhayyim.mitooshi.seriesObservation"
+  "com.etzhayyim.mitooshi.forecastDistribution"
+  "com.etzhayyim.mitooshi.scoreResidual"
+  "com.etzhayyim.mitooshi.calibrationReport"
+  "com.etzhayyim.mitooshi.modelUpdateAttestation"
+  "com.etzhayyim.mitooshi.silenMitooshiReview"]}
