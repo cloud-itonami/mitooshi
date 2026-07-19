@@ -1,58 +1,54 @@
 {
-  "lexicon": 1,
-  "id": "com.etzhayyim.mitooshi.scoreResidual",
-  "defs": {
-    "main": {
-      "type": "record",
-      "key": "tid",
-      "record": {
-        "type": "object",
-        "required": [
-          "forecastId",
-          "obsId",
-          "derived"
-        ],
-        "properties": {
-          "forecastId": {
-            "type": "string",
-            "description": "→ :forecast/id"
+  "lexicon" : 1,
+  "id" : "com.etzhayyim.mitooshi.scoreResidual",
+  "defs" : {
+    "main" : {
+      "type" : "record",
+      "key" : "tid",
+      "record" : {
+        "type" : "object",
+        "required" : [ "forecastId", "obsId", "derived" ],
+        "properties" : {
+          "pinball" : {
+            "type" : "number",
+            "description" : "mean pinball / quantile loss"
           },
-          "obsId": {
-            "type": "string",
-            "description": "→ :obs/id; G5 — :obs/observed-at MUST be > forecast :info-as-of"
+          "skill" : {
+            "type" : "number",
+            "description" : "1 − score_model/score_baseline; >0 = beats baseline"
           },
-          "crps": {
-            "type": "number",
-            "description": "Continuous Ranked Probability Score (lower better)"
+          "brier" : {
+            "type" : "number",
+            "description" : "categorical only"
           },
-          "pinball": {
-            "type": "number",
-            "description": "mean pinball / quantile loss"
+          "crps" : {
+            "type" : "number",
+            "description" : "Continuous Ranked Probability Score (lower better)"
           },
-          "logScore": {
-            "type": "number",
-            "description": "negative log predictive density"
+          "pit" : {
+            "type" : "number",
+            "description" : "F(y) ∈ [0,1] — Uniform if calibrated"
           },
-          "brier": {
-            "type": "number",
-            "description": "categorical only"
+          "obsId" : {
+            "type" : "string",
+            "description" : "→ :obs/id; G5 — :obs/observed-at MUST be > forecast :info-as-of"
           },
-          "pit": {
-            "type": "number",
-            "description": "F(y) ∈ [0,1] — Uniform if calibrated"
+          "logScore" : {
+            "type" : "number",
+            "description" : "negative log predictive density"
           },
-          "skill": {
-            "type": "number",
-            "description": "1 − score_model/score_baseline; >0 = beats baseline"
+          "derived" : {
+            "type" : "boolean",
+            "const" : true,
+            "description" : "INVARIANT — a score is DERIVED; never re-ingested as authoritative fact"
           },
-          "baselineId": {
-            "type": "string",
-            "description": "→ :baseline/id (climatology/persistence/random-walk)"
+          "baselineId" : {
+            "type" : "string",
+            "description" : "→ :baseline/id (climatology/persistence/random-walk)"
           },
-          "derived": {
-            "type": "boolean",
-            "const": true,
-            "description": "INVARIANT — a score is DERIVED; never re-ingested as authoritative fact"
+          "forecastId" : {
+            "type" : "string",
+            "description" : "→ :forecast/id"
           }
         }
       }

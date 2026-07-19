@@ -1,38 +1,33 @@
 {
-  "lexicon": 1,
-  "id": "com.etzhayyim.mitooshi.calibrationReport",
-  "defs": {
-    "main": {
-      "type": "record",
-      "key": "tid",
-      "record": {
-        "type": "object",
-        "required": [
-          "modelId",
-          "pitMean",
-          "deviation",
-          "asOf"
-        ],
-        "properties": {
-          "modelId": {
-            "type": "string",
-            "description": "→ :fc.model/id"
+  "lexicon" : 1,
+  "id" : "com.etzhayyim.mitooshi.calibrationReport",
+  "defs" : {
+    "main" : {
+      "type" : "record",
+      "key" : "tid",
+      "record" : {
+        "type" : "object",
+        "required" : [ "modelId", "pitMean", "deviation", "asOf" ],
+        "properties" : {
+          "modelId" : {
+            "type" : "string",
+            "description" : "→ :fc.model/id"
           },
-          "pitMean": {
-            "type": "number",
-            "description": "≈0.5 if calibrated"
+          "pitMean" : {
+            "type" : "number",
+            "description" : "≈0.5 if calibrated"
           },
-          "deviation": {
-            "type": "number",
-            "description": "G7 — PIT-histogram L1 deviation from uniform; calibration_gate refuses promotion above its bound"
+          "deviation" : {
+            "type" : "number",
+            "description" : "G7 — PIT-histogram L1 deviation from uniform; calibration_gate refuses promotion above its bound"
           },
-          "hist": {
-            "type": "string",
-            "description": "edn vector of per-bin PIT frequencies"
+          "hist" : {
+            "type" : "string",
+            "description" : "edn vector of per-bin PIT frequencies"
           },
-          "asOf": {
-            "type": "integer",
-            "description": "非終末論 — calibration is a moving record, not a final verdict"
+          "asOf" : {
+            "type" : "integer",
+            "description" : "非終末論 — calibration is a moving record, not a final verdict"
           }
         }
       }
