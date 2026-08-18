@@ -6,7 +6,7 @@
   (:require [clojure.string :as str]
             [mitooshi.methods.bridge-kakaku :as bk]
             [mitooshi.methods.forecast :as fc]
-            #?(:clj [cheshire.core :as json])))
+            [json.compat :as json]))
 
 (def pid "jan_4901777300443")
 (def sid "s-jan-4901777300443-supply-demand")

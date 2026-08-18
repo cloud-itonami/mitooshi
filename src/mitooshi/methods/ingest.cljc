@@ -17,7 +17,7 @@
   The G10 live-fetch gate lives in the Python `main` (--live + MITOOSHI_OPERATOR_GATE),
   omitted from this port per the convention; `normalize` itself is pure (no I/O). stdlib only."
   (:require [clojure.string :as str]
-            #?(:clj [cheshire.core :as json])))
+            [json.compat :as json]))
 
 ;; G4 — the primary-public source classes; anything else is refused (kanjo §2(c)/(e)).
 (def ALLOWED-SOURCE-CLASS
