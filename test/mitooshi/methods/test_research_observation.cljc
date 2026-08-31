@@ -60,7 +60,26 @@
           h' (rio/refresh-history h o2)]
       (is (= [o1] h))
       (is (= [o1 o2] h'))
-      (is (= 2 (count h'))))))
+      (is (= 2 (count h'))))
+    (testing "identical re-measurement of the same window is a no-op (idempotent refresh)"
+      (let [o1 (rio/observe [(sig "a" :scholarly-citation "2025-01-01")]
+                            {:from "2024-01-01" :to "2025-07-01"})
+            o1' (rio/observe [(sig "a" :scholarly-citation "2025-01-01")]
+                             {:from "2024-01-01" :to "2025-07-01"})
+            h   (rio/refresh-history [] o1)
+            h'  (rio/refresh-history h o1')]
+        (is (= o1 o1'))
+        (is (= h h')))
+      (testing "different content at the same window is kept — both preserved"
+        (let [o1  (rio/observe [(sig "a" :scholarly-citation "2025-01-01")]
+                               {:from "2024-01-01" :to "2025-07-01"})
+              o1b (rio/observe [(sig "a2" :policy-citation "2025-02-01")]
+                               {:from "2024-01-01" :to "2025-07-01"})
+              h   (rio/refresh-history [] o1)
+              h'  (rio/refresh-history h o1b)]
+          (is (= 2 (count h')))
+          (is (some #(= o1 %) h'))
+          (is (some #(= o1b %) h')))))))
 
 (deftest honesty-flags
   (testing "retraction/correction preserved as own dimension, never netted"

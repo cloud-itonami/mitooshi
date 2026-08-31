@@ -139,9 +139,16 @@
 
 (defn refresh-history
   "Append a new observation to an existing refresh history. Prior observations
-  are immutable; history is append-only and sorted by window.from."
+  are immutable; history is append-only and sorted by window.from.
+  IDEMPOTENT on identical re-measurement: a byte-identical observation of an
+  already-recorded window is a no-op (a cron re-run of the same window must not
+  multiply the history), while a DIFFERENT observation of the same window is
+  kept — both measurements are preserved, nothing is silently overwritten."
   [history observation]
-  (sort-by (comp :from :window) (conj (vec history) observation)))
+  (let [h (vec history)]
+    (if (some #(= % observation) h)
+      h
+      (sort-by (comp :from :window) (conj h observation)))))
 
 (defn measured?
   [observation]
