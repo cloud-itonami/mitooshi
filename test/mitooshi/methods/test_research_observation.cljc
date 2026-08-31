@@ -129,3 +129,38 @@
       (is (= {:accepted false :reason :provenance-lost}
              (rio/readback (update-in p [:proposal/provenance 0]
                                       dissoc :source-url)))))))
+
+(deftest dedupe-key-determinism
+  (testing "same measurement → same key, independent of map/signal ordering"
+    (let [sigs1 [(sig "s1" :scholarly-citation "2025-03-01")
+                 (sig "s2" :scholarly-citation "2025-04-01")
+                 (sig "s3" :retraction "2025-05-01")]
+          obs1 (rio/observe sigs1 window)
+          sigs2 (reverse sigs1)
+          obs2 (rio/observe sigs2 window)]
+      (is (string? (rio/dedupe-key obs1)))
+      (is (= (rio/dedupe-key obs1) (rio/dedupe-key obs1)))
+      (is (= (rio/dedupe-key obs1) (rio/dedupe-key obs2)))))
+  (testing "changed tallies / window / refusals / method change the key"
+    (let [base (rio/observe [(sig "s1" :scholarly-citation "2025-03-01")] window)
+          more (rio/observe [(sig "s1" :scholarly-citation "2025-03-01")
+                             (sig "s2" :scholarly-citation "2025-04-01")] window)
+          retracted (rio/observe [(sig "s1" :retraction "2025-03-01")] window)
+          win2 {:from "2024-01-01" :to "2025-06-01"}
+          shifted (rio/observe [(sig "s1" :scholarly-citation "2025-03-01")] win2)
+          refused (rio/observe [(sig "s1" :scholarly-citation "2025-03-01"
+                                 (update good-source :source-class (constantly :scraped-profile)))]
+                               window)]
+      (is (not= (rio/dedupe-key base) (rio/dedupe-key more)))
+      (is (not= (rio/dedupe-key base) (rio/dedupe-key retracted)))
+      (is (not= (rio/dedupe-key base) (rio/dedupe-key shifted)))
+      (is (not= (rio/dedupe-key base) (rio/dedupe-key refused)))))
+  (testing "unmeasured observation yields nil — no fabricated identity"
+    (let [bad (update good-source :source-class (constantly :scraped-profile))
+          obs (rio/observe [(sig "s1" :scholarly-citation "2025-03-01" bad)] window)]
+      (is (nil? (rio/dedupe-key obs)))))
+  (testing "proposal carries the dedupe key; readback round-trips it"
+    (let [obs (rio/observe [(sig "s1" :scholarly-citation "2025-03-01")] window)
+          prop (rio/hyakka-proposal obs)]
+      (is (= (rio/dedupe-key obs) (:proposal/dedupe-key prop)))
+      (is (:accepted (rio/readback prop))))))

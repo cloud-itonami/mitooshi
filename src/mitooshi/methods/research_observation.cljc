@@ -147,6 +147,53 @@
   [observation]
   (pos? (reduce + 0 (vals (get observation :tallies/additive)))))
 
+(defn- fnv-1a-hex
+  "Deterministic FNV-1a over the string, in both CLJ and CLJS: the multiply is
+  done on integers below 2^53 (JS doubles stay exact), then reduced mod 2^32.
+  Same input string → same hex digest on every runtime."
+  [s]
+  (let [hex "0123456789abcdef"
+        n (count s)]
+    (loop [i 0 h 0x811c9dc5]
+      (if (= i n)
+        (apply str
+               (map #(nth hex %)
+                    [(bit-and (bit-shift-right h 28) 15)
+                     (bit-and (bit-shift-right h 24) 15)
+                     (bit-and (bit-shift-right h 20) 15)
+                     (bit-and (bit-shift-right h 16) 15)
+                     (bit-and (bit-shift-right h 12) 15)
+                     (bit-and (bit-shift-right h 8) 15)
+                     (bit-and (bit-shift-right h 4) 15)
+                     (bit-and h 15)]))
+        (let [c (int (nth s i))
+              h2 (mod (* (bit-xor h c) 0x01000193) 0x100000000)]
+          (recur (inc i) h2))))))
+
+(defn dedupe-key
+  "Pure, deterministic identity over contract + method/version + window +
+  sorted tallies + sorted refusal reasons + out-of-window exclusions. Two runs
+  over the same measurement produce the same key, so Hyakka can refuse
+  duplicate proposals instead of accumulating copies; a changed tally, window,
+  refusal set or method-version changes the key (a changed measurement is a
+  new observation). Everything entering the key is serialized through
+  sorted-map / sorted vectors, so map iteration order cannot leak into it.
+  Degenerate input (nothing measured) yields nil — no fabricated identity."
+  [observation]
+  (when (and (measured? observation)
+             (not (nil? (get observation :window))))
+    (let [payload
+          {:contract/id (:observation/contract observation)
+           :contract/version (:observation/version observation)
+           :method/version (:method/version observation)
+           :window (into (sorted-map) (get observation :window))
+           :tallies (into (sorted-map) (get observation :tallies/additive))
+           :refused (into (sorted-map) (get observation :refused))
+           :excluded (vec (sort (get observation :excluded/out-of-window)))}]
+      (str "research-influence-observation/"
+           (:contract/version CONTRACT) "/"
+           (fnv-1a-hex (pr-str payload))))))
+
 (defn hyakka-proposal
   "A Hyakka (wiki) proposal is emitted ONLY when something was actually
   measured inside the window. Nothing measured → nil (no fabrication). The
@@ -159,6 +206,7 @@
      :proposal/version (:contract/version CONTRACT)
      :proposal/method-version (:method/version CONTRACT)
      :proposal/window (:window observation)
+     :proposal/dedupe-key (dedupe-key observation)
      :proposal/tallies (get observation :tallies/additive)
      :proposal/flags (get observation :flags)
      :ranking nil
