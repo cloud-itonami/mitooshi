@@ -1,0 +1,71 @@
+{:lexicon 1
+ :id "com.etzhayyim.mitooshi.researchInfluenceObservation"
+ :defs
+ {:main
+  {:type "record"
+   :key "observationId"
+   :record
+   {:type "object"
+    :required ["observationId" "subject" "window" "methodVersion" "metrics" "interpretation"]
+    :properties
+    {:observationId {:type "string" :description "→ :influence.obs/id (append-only; the trail is the history, 非終末論)"}
+     :subject
+     {:type "object"
+      :required ["kind" "id"]
+      :properties
+      {:kind {:type "string" :enum ["work" "dataset" "topic" "venue"]
+              :description "G4 INVARIANT — never a person. Ranking researchers, or building any record keyed by an individual, is refused at the door."}
+       :id    {:type "string" :description "public identifier of the work/dataset/topic/venue (DOI, arXiv id, corpus key, …)"}}}
+     :window
+     {:type "object"
+      :required ["start" "end"]
+      :properties
+      {:start {:type "integer" :description "epoch — inclusive measurement-window start"}
+       :end   {:type "integer" :description "epoch — exclusive measurement-window end; MUST be > start"}}}
+     :methodVersion {:type "string" :description "semver of the observation method — a count without its method version is not reproducible"}
+     :metrics
+     {:type "array"
+      :description "raw counts only. Each metric carries its own provenance; a count without provenance is refused."
+      :items
+      {:type "object"
+       :required ["kind" "value" "sourceClass" "sourceRef" "asOf"]
+       :properties
+       {:kind        {:type "string" :enum ["citation-count" "mention-count" "download-count" "funding-record-count"]}
+        :value       {:type "integer" :description ">= 0; 0 is a valid observation, absence is NOT zero (missingness flag instead)"}
+        :sourceClass {:type "string" :enum ["public-broadcast" "primary-disclosure" "open-commons" "gov-open-data" "member-principal"]}
+        :sourceRef   {:type "string" :description "where the count came from (query, endpoint, snapshot path) — provenance is mandatory"}
+        :asOf        {:type "integer" :description "epoch the count was taken"}
+        :missing     {:type "boolean" :description "true when the source could not answer for this window — the metric is then ABSENT, never zero"}}}}
+     :coverage
+     {:type "object"
+      :description "uncertainty / missingness — emitted alongside the derived observation, never folded into a single score"
+      :properties
+      {:ratio {:type "number" :description "observed-source fraction of the expected denominator, 0..1; absent when the denominator is unknown"}
+       :flags {:type "array" :items {:type "string" :enum ["source-unavailable" "partial-window" "retraction-present" "denominator-unknown" "non-response-bias-possible"]}}}}
+     :interpretation
+     {:type "object"
+      :required ["citationNotSupport" "fundingNotEndorsement" "attentionNotImpact" "correlationNotCausation" "noRanking"]
+      :description "INVARIANT — every emitted record restates the reading constraints. A record without these booleans is invalid."
+      :properties
+      {:citationNotSupport      {:type "boolean"}
+       :fundingNotEndorsement   {:type "boolean"}
+       :attentionNotImpact      {:type "boolean"}
+       :correlationNotCausation {:type "boolean"}
+       :noRanking               {:type "boolean"}}}
+     :derived
+     {:type "object"
+      :description "DESCRIPTIVE aggregates only — what was counted, over which window, with which flags. No ranking, no causal attribution, no quality judgement."
+      :properties
+      {:kind         {:type "string" :enum ["descriptive-aggregate"]}
+       :observationText {:type "string"}
+       :notes        {:type "array" :items {:type "string"}}}}
+     :refreshHistory
+     {:type "array"
+      :description "append-only. A later refresh NEVER overwrites an earlier entry (非終末論)."
+      :items
+      {:type "object"
+       :required ["refreshedAt" "methodVersion" "inputsHash"]
+       :properties
+       {:refreshedAt   {:type "integer"}
+        :methodVersion {:type "string"}
+        :inputsHash    {:type "string" :description "deterministic content fingerprint of the inputs used (fnv1a-32 hex, non-cryptographic dedup id)"}}}}}}}}

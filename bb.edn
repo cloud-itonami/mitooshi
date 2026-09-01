@@ -15,6 +15,7 @@
                    [mitooshi.methods.test-forecast-quantile]
                    [mitooshi.methods.test-horizon]
                    [mitooshi.methods.test-ingest]
+                   [mitooshi.methods.test-influence]
                    [mitooshi.methods.test-kakaku-forecast-e2e]
                    [mitooshi.methods.test-persist]
                    [mitooshi.methods.test-promote]
@@ -38,6 +39,7 @@
                'mitooshi.methods.test-forecast-quantile
                'mitooshi.methods.test-horizon
                'mitooshi.methods.test-ingest
+               'mitooshi.methods.test-influence
                'mitooshi.methods.test-kakaku-forecast-e2e
                'mitooshi.methods.test-persist
                'mitooshi.methods.test-promote
