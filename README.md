@@ -17,7 +17,8 @@ Core invariants:
 ## Layout
 
 - `src/mitooshi/methods/`: analysis, bridges, forecasting, scoring, persistence,
-  promotion, and synthesis
+  promotion, and synthesis (`influence.cljc` — research-influence observation,
+  G4 never-a-person / provenance-mandatory / audit-only)
 - `src/mitooshi/cells/`: five native CLJC state machines
 - `src/mitooshi/viz/`: forecast visualization payload builder
 - `test/mitooshi/`: standalone tests
