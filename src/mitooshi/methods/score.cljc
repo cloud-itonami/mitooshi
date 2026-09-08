@@ -17,7 +17,7 @@
 
   House style: Python ':…' keyword strings stay strings; pure fns; portable .cljc. Map keys
   in forecast/observation records are kebab keywords (:fid :dist-kind :info-as-of …)."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def ^:private sqrt2 (Math/sqrt 2.0))
 (def ^:private sqrt-pi (Math/sqrt Math/PI))

@@ -11,12 +11,12 @@
   Ingested as :representative / source-class :public-broadcast (G4/G11), source actor tagged.
   `bridge-kakaku` is pure (takes already-loaded records); the file read (analyze/load-edn) +
   G10 live wiring live in the Python main, omitted from this port. stdlib only."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn- pslug
   "Slugify a kakaku product id ('jan_4901777300443' / ':jan-…') for a series id."
   [pid]
-  (-> (str pid) (str/replace #"^:+" "") (str/replace "_" "-") (str/replace "." "-") str/lower-case))
+  (-> (str pid) (str/replace #"^:+" "") (str/replace "_" "-") (str/replace "." "-") str/lower))
 
 (defn- mk-series [pid suffix kind unit]
   (let [slug (pslug pid) sid (str "s-" slug "-" suffix)]

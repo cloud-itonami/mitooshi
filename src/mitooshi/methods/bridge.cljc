@@ -16,7 +16,7 @@
   (lanes, craft, stations) are ignored + counted. `bridge` is pure (takes already-loaded
   records); the file read + the G10 live wiring live in the Python main, omitted from this
   port per the convention. stdlib only."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 ;; the shared chokepoint keyword space (watari ∩ watatsuna ∩ mitooshi seed) — documentation
 (def KNOWN-CHOKEPOINTS

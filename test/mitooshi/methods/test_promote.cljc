@@ -7,7 +7,7 @@
   G9 (unsigned / server-signed refused), and that a skilled+calibrated+member-signed model
   clears. The gate logic itself is the cell's review-promotion (single source of truth)."
   (:require [clojure.test :refer [deftest is]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [mitooshi.methods.promote :as p]))
 

@@ -13,7 +13,7 @@
     AU  Hyakka proposal is audit-only; readback verifies the stored copy byte-for-byte,
         the interpretation booleans, and that the refresh history never shrank."
   (:require [clojure.test :refer [deftest is run-tests testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [mitooshi.methods.influence :as influence]))
 
 (def ^:private SUBJECT {"kind" "work" "id" "doi:10.0000/example.2026"})

@@ -19,7 +19,7 @@
   Math fns via Math/ (last-ULP, matching python3 math.* on the same inputs); φ^h via Math/pow
   matching Python's ** on integer exponents. Float formatting matches Python {x:.4f} via
   HALF_EVEN on the exact double. Portable .cljc."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [mitooshi.methods.score :as score]))
 
 (def mu 10.0)

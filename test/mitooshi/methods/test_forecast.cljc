@@ -4,7 +4,7 @@
   distributions (G1 point-asserted false), use only pre-target history (G5), and score with proper
   rules + skill vs climatology (G12). Synthetic upward-trend history for non-trivial skill."
   (:require [clojure.test :refer [deftest is]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [mitooshi.methods.forecast :as fc]
             [mitooshi.methods.score :as score]

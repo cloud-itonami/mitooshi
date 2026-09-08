@@ -6,7 +6,7 @@
   the online_update cell's learned bias/inflation (apply-correction) using ONLY past residuals.
   The Python __main__ CLI (load-edn + argv dispatch) is the omitted I/O leg; the importlib load of
   the online_update cell becomes a direct require."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [mitooshi.methods.score :as score]
             [mitooshi.cells.online-update.state-machine :as ou]))
 

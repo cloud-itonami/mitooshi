@@ -4,7 +4,7 @@
   bias_corr = EWMA(prior, mean residual) corrects systematic drift; var_infl = resid_std / mean_sd
   (EWMA'd + clamped) recalibrates spread toward a uniform PIT. PROPOSES a new version; never promotes
   (calibration_gate does, G9). G8: training runtime must be :baien-edge (no commercial GPU)."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def state-defaults
   {"phase" "init" "model_id" "" "from_version" 1 "alpha" 0.3 "prior_bias" 0.0 "prior_var_infl" 1.0

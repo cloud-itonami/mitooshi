@@ -15,7 +15,7 @@
   reliability-datom assertions. forecast/score/persist/synthesize/promote-dependent tests
   in the sibling Python suites are out of scope here (those need unported sibling modules —
   promote.cljc is already ported separately; score.cljc IS ported and exercised here)."
-  (:require [clojure.test :refer [deftest is testing run-tests]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing run-tests]]
             [clojure.java.io :as io]
             [mitooshi.methods.analyze :as analyze]
             [mitooshi.methods.score :as score]))
@@ -74,17 +74,17 @@
   (let [r (res)
         md (analyze/render-reliability r)]
     (doseq [c (get r "cards")]
-      (is (clojure.string/includes? md (get c "name"))))
-    (is (and (clojure.string/includes? md "PIT mean")
-             (clojure.string/includes? md "uniform ideal")))))
+      (is (kotoba.lang.text/includes? md (get c "name"))))
+    (is (and (kotoba.lang.text/includes? md "PIT mean")
+             (kotoba.lang.text/includes? md "uniform ideal")))))
 
 (deftest test-reliability-datoms-emit-calib-records
   (let [r (res)
         edn (analyze/render-reliability-datoms r)]
     (is (= (count (get r "cards"))
            (count (re-seq #":fc.calib/id" edn))))
-    (is (and (clojure.string/includes? edn ":fc.calib/pit-mean")
-             (clojure.string/includes? edn ":fc.calib/hist")))))
+    (is (and (kotoba.lang.text/includes? edn ":fc.calib/pit-mean")
+             (kotoba.lang.text/includes? edn ":fc.calib/hist")))))
 
 ;; ── constitutional gate tests (G1 / G2 never-trades, G5 leak-free) ──────────
 (deftest test-G1-point-asserted-forecast-is-unrepresentable
@@ -118,10 +118,10 @@
 ;; Clojure renderer drifts (float formatting, ordering, gate text), this fails immediately.
 (deftest test-byte-identical-datoms-line
   (let [edn (analyze/render-reliability-datoms (res))]
-    (is (clojure.string/includes?
+    (is (kotoba.lang.text/includes?
          edn
          "{:fc.calib/id \"calib-m-ewma-drift\" :fc.calib/model \"m-ewma-drift\" :fc.calib/pit-mean 0.559174 :fc.calib/deviation 1.200000 :fc.calib/hist \"[0.0000 0.1667 0.0000 0.0000 0.1667 0.0000 0.3333 0.3333 0.0000 0.0000]\"}")))
   (let [edn (analyze/render-datoms (res))]
-    (is (clojure.string/includes?
+    (is (kotoba.lang.text/includes?
          edn
          "{:fc.score/id \"score-m-c-edge\" :fc.score/model \"m-c-edge\" :fc.score/metric \"Brier\" :fc.score/value 0.338333 :fc.score/pit 0.866667 :fc.score/skill 0.437994 :fc.model/skilled true :fc.score/derived true}"))))

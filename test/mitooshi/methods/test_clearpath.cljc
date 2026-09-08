@@ -3,7 +3,7 @@
   methods/test_clearpath.py. On a single-regime fixture calibrated persistence is skilled (G12) +
   calibrated (G7) → a member signature CLEARS promotion, refused unsigned (G9 no-server-key)."
   (:require [clojure.test :refer [deftest is]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [mitooshi.methods.forecast :as fc]
             [mitooshi.methods.promote :as promote]

@@ -25,7 +25,7 @@
       (absence of evidence is not fabricated evidence).
 
   Pure: no I/O, no network, no LLM. stdlib only."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def CONTRACT {:contract/id "research-influence-observation"
                :contract/version "v1"

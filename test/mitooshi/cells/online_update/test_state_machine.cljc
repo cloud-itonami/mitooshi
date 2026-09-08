@@ -4,7 +4,7 @@
   systematic bias + variance inflation (PROPOSED, never promoted), apply-correction cancels the
   systematic error, and a non-:baien-edge runtime / empty residuals are REJECTED."
   (:require [clojure.test :refer [deftest is]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [mitooshi.cells.online-update.state-machine :as ou]))
 
 (deftest test-online-update-proposes-bias-and-inflation

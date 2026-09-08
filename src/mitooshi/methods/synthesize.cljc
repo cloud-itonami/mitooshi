@@ -14,7 +14,7 @@
 
   The composite functions are pure (they take already-loaded row vectors); file I/O
   lives in the caller (analyze/load-edn-file). stdlib only."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn- pyround
   "round(x, n) with banker's rounding (round-half-to-even), matching Python round()."
