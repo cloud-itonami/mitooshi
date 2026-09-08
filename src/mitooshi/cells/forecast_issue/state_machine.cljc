@@ -4,7 +4,7 @@
   G1 point_asserted false (no deterministic single-future, 非終末論), G2 use ∈ non-speculative set,
   and the distribution is well-formed (gaussian sd>0, quantile/categorical non-empty + normalized).
   REFUSAL gate, not a clamp."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def allowed-use #{"resilience" "planning" "nowcast" "early-warning" "research"})
 (def dist-kinds #{"gaussian" "quantile" "categorical" "ensemble"})

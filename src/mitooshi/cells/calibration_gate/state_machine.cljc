@@ -3,7 +3,7 @@
   1:1 port of cells/calibration_gate/state_machine.py (ADR-2606051800). A model version is CLEARED for
   promotion only if G12 skill>0 (beats baseline), G7 calibration deviation ≤ max, G9 member/operator
   signature (server sig refused, no-server-key), G1 no point-assertion slipped through. REFUSAL gate."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def default-deviation-max 0.4)
 
@@ -32,7 +32,7 @@
       (refuse (str "G12: model " (pr-str (get cs "model_id")) " skill " (format "%.4f" (get cs "skill")) " ≤ 0; does not beat baseline; promotion refused"))
       (> (get cs "deviation") (get cs "deviation_max"))
       (refuse (str "G7: calibration deviation " (format "%.4f" (get cs "deviation")) " > " (format "%.4f" (get cs "deviation_max")) "; miscalibrated; promotion refused"))
-      (or (not (seq sb)) (str/starts-with? (str/lower-case sb) "server"))
+      (or (not (seq sb)) (str/starts-with? (str/lower sb) "server"))
       (refuse (str "G9: promotion of " (pr-str (get cs "model_id")) " needs a member/operator signature; server signature refused (no-server-key)"))
       :else
       {"cell_state" (assoc cs "phase" "cleared" "refusal" ""

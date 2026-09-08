@@ -8,14 +8,14 @@
   per-item refusal of bad forecasts. The band oracle is exact — mean 0.2 / sd 0.3
   → [-0.1, 0.5] (round-to-4 of the float subtraction), pinned both as the numeric
   band68 and as the substring of the rendered text."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [mitooshi.methods.social :as social]))
 
 (deftest advisory-states-a-band-not-a-point
   (let [adv (social/compose-resilience-advisory "s-x" 0.2 0.3 7)]
     (is (= false (get adv "pointAsserted")))          ; G1
     (is (= [-0.1 0.5] (get adv "band68")))
-    (is (clojure.string/includes? (get adv "text") "[-0.1, 0.5]"))))
+    (is (kotoba.lang.text/includes? (get adv "text") "[-0.1, 0.5]"))))
 
 (deftest advisory-refuses-point-assertion-g1
   (is (thrown-with-msg? #?(:clj clojure.lang.ExceptionInfo :cljs js/Error) #"G1"
@@ -32,7 +32,7 @@
   (testing "a valid planner is accepted"
     (let [adv (social/compose-resilience-advisory "s-x" 0.2 0.3 7 :route-to "kanae")]
       (is (= "kanae" (get adv "routeTo")))
-      (is (clojure.string/includes? (get adv "text") "kanae")))))
+      (is (kotoba.lang.text/includes? (get adv "text") "kanae")))))
 
 (deftest allowed-use-excludes-trade
   (is (some #(= % ":resilience") social/ALLOWED-USE))
@@ -62,5 +62,5 @@
                            {"series" "tr" "mean" 0.2 "sd" 0.3 "target" 7 "use" ":trade"}]})
         reasons (into {} (map (fn [r] [(get r "series") (get r "reason")]) (get out "refused")))]
     (is (= 1 (count (get out "posts"))))              ; only the clean one
-    (is (clojure.string/includes? (get reasons "pt") "G1"))
-    (is (clojure.string/includes? (get reasons "tr") "G2"))))
+    (is (kotoba.lang.text/includes? (get reasons "pt") "G1"))
+    (is (kotoba.lang.text/includes? (get reasons "tr") "G2"))))

@@ -3,7 +3,7 @@
   1:1 port of cells/series_ingest/state_machine.py (ADR-2606051800). A public series is RECORDED only
   if :series/source-class ∈ the primary-public set; proprietary terminals / scraped Google-Trends are
   unrepresentable and REFUSE ingest. Observations are append-only (非終末論). REFUSAL gate, not a clamp."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def allowed-source-class
   #{"public-broadcast" "primary-disclosure" "open-commons" "gov-open-data" "member-principal"})

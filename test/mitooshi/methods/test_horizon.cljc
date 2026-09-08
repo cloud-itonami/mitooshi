@@ -9,7 +9,7 @@
     G5 leak-free — each origin's obs is strictly after info-as-of; many origins per horizon.
     G12 skill-honest — skill_vs_clim is pinball/CRPS skill vs the climatology baseline, and
        it DECAYS with horizon (never a flat-skill crystal ball, 非終末論)."
-  (:require [clojure.test :refer [deftest is run-tests]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is run-tests]]
             [mitooshi.methods.horizon :as horizon]))
 
 (deftest test-path-is-deterministic-and-mean-reverting
@@ -42,8 +42,8 @@
   (let [rows (horizon/horizon-skill)
         md (horizon/render-md rows)]
     (doseq [r rows]
-      (is (clojure.string/includes? md (str "| " (get r "h") " |"))))
-    (is (clojure.string/includes? md "skill vs clim"))))
+      (is (kotoba.lang.text/includes? md (str "| " (get r "h") " |"))))
+    (is (kotoba.lang.text/includes? md "skill vs clim"))))
 
 #?(:clj
    (defn -main [& _] (run-tests 'mitooshi.methods.test-horizon)))

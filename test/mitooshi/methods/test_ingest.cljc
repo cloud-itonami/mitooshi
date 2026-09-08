@@ -10,7 +10,7 @@
   The Python test's two --live cases (6 & 7) exercise main's CLI G10 gate via
   subprocess; main is omitted from this port per the convention (the G10 live-fetch
   gate stays in the Python entry point), so those CLI cases are out of scope here."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing]]
             [mitooshi.methods.ingest :as ingest]))
 
 (def sample-path "wire/fixtures/sample-batch.json")
@@ -26,7 +26,7 @@
         r (first (get n "refused"))]
     (is (= 1 (count (get n "refused"))))
     (is (= "s-blocked-terminal" (get r "id")))
-    (is (clojure.string/includes? (get r "reason") "G4"))))
+    (is (kotoba.lang.text/includes? (get r "reason") "G4"))))
 
 (deftest observations-are-sorted-append-only
   (let [n (ingest/normalize (batch))

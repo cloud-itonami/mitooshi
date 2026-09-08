@@ -23,7 +23,7 @@
   House style: string-keyed maps (lexicon property names), pure functions,
   file I/O only at #?(:clj) edges, no deps. The inputsHash is a NON-cryptographic
   fnv1a-32 content fingerprint used for dedup/reproducibility only."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def METHOD-VERSION "1.0.0")
 
@@ -135,7 +135,7 @@
 (defn validate-notes
   "NC — notes and the observation text may not carry causal or ranking vocabulary."
   [notes text]
-  (let [hay (str/lower-case (str text " " (str/join " " notes)))
+  (let [hay (str/lower (str text " " (str/join " " notes)))
         hit (some #(when (str/includes? hay %) %) BANNED-WORDS)]
     (when hit
       (refuse "NC/LANGUAGE" (str "descriptive observations may not use causal/ranking vocabulary, found: "

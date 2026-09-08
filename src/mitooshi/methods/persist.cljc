@@ -17,7 +17,7 @@
   The impl depends only on the already-ported same-actor analyze (load-edn-file /
   read-edn). `bridge` is used by main + the test fixtures only, NOT here. stdlib only;
   file I/O at the #?(:clj) edge."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [mitooshi.methods.analyze :as analyze]
             #?(:clj [clojure.java.io :as io])))
 

@@ -3,7 +3,7 @@
   (the pure build-payload + render-html; the __main__ file-writing CLI is the omitted I/O leg).
   Bridges a rising kakaku supply-demand series, forecasts the next value as a Gaussian distribution,
   and shapes both into a self-contained fan-chart payload (G1 distribution / G2 resilience / G5 leak-free)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [mitooshi.methods.bridge-kakaku :as bk]
             [mitooshi.methods.forecast :as fc]
             [json.compat :as json]))

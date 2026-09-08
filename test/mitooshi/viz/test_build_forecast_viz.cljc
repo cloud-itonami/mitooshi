@@ -4,7 +4,7 @@
   forecast (G1 not a point / G2 :resilience / G5 info-as-of < target), and render-html inlines a
   self-contained payload (no live http fetch)."
   (:require [clojure.test :refer [deftest is]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [mitooshi.viz.build-forecast-viz :as b]))
 

@@ -23,7 +23,7 @@
 
   Python `\":…\"` map keys + `:…` value atoms stay STRINGS (kebab-keyword opts only at the
   Clojure call surface). Portable .cljc — file I/O only at the #?(:clj) edge."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 ;; ── calibration_gate: review_promotion (ported from cells/calibration_gate/state_machine.py)
 
@@ -70,7 +70,7 @@
       (refuse (format "G7: calibration deviation %.4f > %.4f; miscalibrated; promotion refused"
                       deviation deviation-max))
       ;; G9 — no-server-key: member/operator signature required.
-      (or (str/blank? signed-by) (str/starts-with? (str/lower-case signed-by) "server"))
+      (or (str/blank? signed-by) (str/starts-with? (str/lower signed-by) "server"))
       (refuse (format "G9: promotion of '%s' needs a member/operator signature; server signature refused (no-server-key)"
                       model-id))
       :else

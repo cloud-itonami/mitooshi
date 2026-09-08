@@ -16,7 +16,7 @@
 
   The optional Murakumo narration (kotoba `llm`) is unavailable offline, so narration
   is always nil here — exactly the Python `llm is None` branch. stdlib only."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 ;; G2 — the only non-speculative uses; trade/speculation/wager/position are NOT members.
 (def ALLOWED-USE [":resilience" ":planning" ":nowcast" ":early-warning" ":research"])

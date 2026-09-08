@@ -10,7 +10,7 @@
   mutated, union-first-wins series, EDN round-trips through the same reader, two
   snapshots accumulate on disk, header marks DERIVED + G10-gated (非終末論)."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [mitooshi.methods.persist :as persist]
             [mitooshi.methods.analyze :as analyze]))
 

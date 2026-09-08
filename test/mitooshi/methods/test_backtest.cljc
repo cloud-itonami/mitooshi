@@ -3,7 +3,7 @@
   Leak-free per origin, persistence beats climatology on a trend across origins, scorecard EDN carries
   the G5/G12/G10 markers + per-method aggregate skill."
   (:require [clojure.test :refer [deftest is]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [mitooshi.methods.forecast :as fc]
             [mitooshi.methods.analyze :as analyze]))

@@ -4,7 +4,7 @@
   scoring engine (mitooshi.methods.score) over a forecast/observation batch → scorecard, OR REFUSES
   if any pairing would leak (obs not strictly after info-as-of) / asserts a point / uses a bad use.
   REFUSAL gate, not a clamp."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [mitooshi.methods.score :as score]))
 
 (def state-defaults

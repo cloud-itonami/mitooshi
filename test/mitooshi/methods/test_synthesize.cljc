@@ -8,7 +8,7 @@
   analyze/load-edn-file, so any divergence in the watari+watatsuna+mitooshi fusion
   or the scale-free attention blend fails here."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [mitooshi.methods.synthesize :as syn]
             [mitooshi.methods.analyze :as analyze]))
 
@@ -64,6 +64,6 @@
 (deftest render-edn-is-resilience-not-target-list
   (let [edn (syn/render-edn (comp*))]
     (is (str/includes? edn "RESILIENCE"))
-    (is (str/includes? (str/lower-case edn) "never a target-list"))
+    (is (str/includes? (str/lower edn) "never a target-list"))
     (is (str/includes? edn ":choke/attention"))
     (is (str/includes? edn "G10-gated"))))

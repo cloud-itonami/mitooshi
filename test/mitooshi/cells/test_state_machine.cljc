@@ -4,7 +4,7 @@
   (online_update has its own test_state_machine.cljc.) G4 source / G1·G2 forecast / G7·G9·G12 promotion
   / G5·G12 scoring — all REFUSAL gates; .solve() raises at R0."
   (:require [clojure.test :refer [deftest is]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [mitooshi.cells.series-ingest.state-machine :as si]
             [mitooshi.cells.forecast-issue.state-machine :as fi]
             [mitooshi.cells.calibration-gate.state-machine :as cg]

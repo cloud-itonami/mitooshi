@@ -29,7 +29,7 @@
   House style: Python ':…' keyword strings stay strings (incl. all :series/* / :forecast/*
   attrs); pure fns; file I/O only at #?(:clj) edges. Float formatting matches Python's
   {x:.Nf} / round() exactly via HALF_EVEN on the exact BigDecimal of the double. Portable .cljc."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [mitooshi.methods.score :as score]))
 
 ;; ── minimal EDN reader (subset: [] {} :kw \"str\" num bool nil) — ported from analyze.py's
