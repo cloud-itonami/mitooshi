@@ -17,5 +17,5 @@ point forecast as certainty.
 
 EDN is canonical. JSON and HTML are external or rendered representations only.
 
-Run `bb test`. Go, TinyGo, Python parity code, WASM build artifacts, root-level
+Run `kbb -M:test`. Go, TinyGo, Python parity code, WASM build artifacts, root-level
 shell runners, and duplicated JSON-LD metadata are deprecated.

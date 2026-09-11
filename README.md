@@ -27,5 +27,5 @@ Core invariants:
 - `wire/`: JSON exchange formats and generated visualization payload
 - `docs/viz/`: rendered/template HTML
 
-Run the full suite with `bb test`. Canonical metadata and contracts are EDN;
+Run the full suite with `kbb -M:test`. Canonical metadata and contracts are EDN;
 JSON-LD actor metadata is intentionally removed.
